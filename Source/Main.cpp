@@ -8,11 +8,13 @@
 #include <stdio.h>			// Required for: printf()
 #include <stdlib.h>			// Required for: EXIT_SUCCESS
 #include <math.h>			// Required for: sinf(), cosf()
+#include <SDL_ttf.h>
 
 // Include SDL libraries
 #include "SDL/include/SDL.h"				// Required for SDL base systems functionality
 #include "SDL_image/include/SDL_image.h"	// Required for image loading functionality
 #include "SDL_mixer/include/SDL_mixer.h"	// Required for audio loading and playing functionality
+#include "SDL_ttf/include/SDL_ttf.h"		// Required for text_texture
 
 // Define libraries required by linker
 // WARNING: Not all compilers support this option and it couples 
@@ -68,6 +70,8 @@ struct GlobalState
 	SDL_Surface* surface;
 	SDL_Renderer* renderer;
 
+	
+
 	// Input events
 	KeyState* keyboard;
 	KeyState mouse_buttons[MAX_MOUSE_BUTTONS];
@@ -83,6 +87,18 @@ struct GlobalState
 	SDL_Texture* ship;
 	SDL_Texture* shot;
 	int background_width;
+
+
+	//text_texture variable
+	TTF_Font* test_font;
+	SDL_Color test_font_color;
+	SDL_Surface* test_font_surface;
+	SDL_Texture* text_texture[100];
+	SDL_Surface* text_surface;
+	int text_width[100];
+	int text_height[100];
+	SDL_Rect text_space[100];
+
 
 	// Audio variables
 	Mix_Music* music;
@@ -119,6 +135,9 @@ void Start()
 	// Init window
 	state.window = SDL_CreateWindow("Super Awesome Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 	state.surface = SDL_GetWindowSurface(state.window);
+	
+
+	
 
 	// Init renderer
 	state.renderer = SDL_CreateRenderer(state.window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -146,32 +165,77 @@ void Start()
 
 	// L4: TODO 1: Init audio system and load music/fx
 	// EXTRA: Handle the case the sound can not be loaded!
-	
-	Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG);
 
-	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4000);
-	
+	Mix_Init(0);
+	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 2048);
+
+	if (Mix_LoadMUS("Assets/music.ogg") < 0) printf("error loading music");
+	else state.music = Mix_LoadMUS("Assets/music.ogg");
+
+	if (Mix_LoadWAV("Assets/laser.wav") < 0) printf("error loading fx");
+	else state.fx_shoot = Mix_LoadWAV("Assets/laser.wav");
+
+	TTF_Init();
+	//SET FONT
+	state.test_font = TTF_OpenFont("Assets/Fonts/Russo_One_Regular.ttf", 32);
+
+	//SET COLOR
+	state.test_font_color = { 255,255,255 };
+
+	//SET text_texture
+	state.text_surface = TTF_RenderText_Solid(state.test_font, "Test text_texture", state.test_font_color);
+
+	// SET TEXTS
+	state.text_texture[0] = SDL_CreateTextureFromSurface(state.renderer, state.text_surface);
+	state.text_width[0] = 0;
+	state.text_width[0] = 0;
+
+	SDL_QueryTexture(state.text_texture[0], NULL, NULL, &state.text_width[0], &state.text_height[0]);
+	for (int i = 0; i < 100; i++) {
+
+		state.text_space[i] = { 0,0,state.text_width[i],state.text_height[i] };
+	}
+
 	// L4: TODO 2: Start playing loaded music
+<<<<<<< Updated upstream
 	state.music = Mix_LoadMUS("Assets/bensound-jazzyfrenchy.mp3");
+=======
+>>>>>>> Stashed changes
 
-	Mix_PlayMusic(state.music, -1);
+	Mix_PlayMusic(state.music, true);
 
+	
 	// Init game variables
 	state.ship_x = 100;
 	state.ship_y = SCREEN_HEIGHT / 2;
 	state.last_shot = 0;
 	state.scroll = 0;
+
+	
+
 }
 
 // ----------------------------------------------------------------
 void Finish()
 {
+
+	TTF_CloseFont(state.test_font);
+	for (int i = 0; i < 100; i++) {
+
+		SDL_DestroyTexture(state.text_texture[i]);
+	}
+
+	TTF_Quit();
 	// L4: TODO 3: Unload music/fx and deinitialize audio system
 
+
+	Mix_FreeChunk(state.fx_shoot);
+	Mix_FreeMusic(state.music);
 
 	// Unload textures and deinitialize image system
 	SDL_DestroyTexture(state.background);
 	SDL_DestroyTexture(state.ship);
+	
 	IMG_Quit();
 
 	// L2: DONE 3: Close game controller
@@ -180,12 +244,13 @@ void Finish()
 
 	// Deinitialize input events system
 	//SDL_QuitSubSystem(SDL_INIT_EVENTS);
-
+	
 	// Deinitialize renderer and window
 	// WARNING: Renderer should be deinitialized before window
 	SDL_DestroyRenderer(state.renderer);
 	SDL_DestroyWindow(state.window);
 
+	SDL_FreeSurface(state.text_surface);
 	// Deinitialize SDL internal global state
 	SDL_Quit();
 
@@ -320,6 +385,7 @@ void MoveStuff()
 
 		// L4: TODO 4: Play sound fx_shoot
         
+		Mix_PlayChannel(0, state.fx_shoot, false);
 	}
 
 	// Update active shots
@@ -337,7 +403,7 @@ void MoveStuff()
 void Draw()
 {
 	// Clear screen to Cornflower blue
-	SDL_SetRenderDrawColor(state.renderer, 100, 149, 237, 255);
+	SDL_SetRenderDrawColor(state.renderer, 0, 0, 0, 255);
 	SDL_RenderClear(state.renderer);
 
 	// Draw background and scroll
@@ -370,6 +436,10 @@ void Draw()
 		}
 	}
 
+	// Draw text_texture
+
+	SDL_RenderCopy(state.renderer, state.text_texture[0],NULL,&state.text_space[0]);
+	
 	// Finally present framebuffer
 	SDL_RenderPresent(state.renderer);
 }
