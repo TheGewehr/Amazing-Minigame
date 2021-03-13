@@ -26,17 +26,17 @@
 // -------------------------------------------------------------------------
 // Defines, Types and Globals
 // -------------------------------------------------------------------------
-#define SCREEN_WIDTH		1280
-#define SCREEN_HEIGHT		 720
+#define SCREEN_WIDTH		720 
+#define SCREEN_HEIGHT		1280
 
 #define MAX_KEYBOARD_KEYS	 256
 #define MAX_MOUSE_BUTTONS	   5
 #define JOYSTICK_DEAD_ZONE  8000
 
-#define SHIP_SPEED			   8
-#define MAX_SHIP_SHOTS		  32
-#define SHOT_SPEED			  12
-#define SCROLL_SPEED		   5
+#define SHIP_SPEED			   6
+#define MAX_SHIP_SHOTS		  10
+#define SHOT_SPEED			  1
+#define SCROLL_SPEED		   6
 
 enum WindowEvent
 {
@@ -152,7 +152,7 @@ void Start()
 	Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 4000);
 	
 	// L4: TODO 2: Start playing loaded music
-	state.music = Mix_LoadMUS("Assets/GUNAuto_Shot beretta m12 9 mm (ID 0437)_BSB.mp3");
+	state.music = Mix_LoadMUS("Assets/bensound-jazzyfrenchy.mp3");
 
 	Mix_PlayMusic(state.music, -1);
 
