@@ -16,7 +16,7 @@
     <ProjectGuid>{885bdc69-fb7f-45c0-b68c-ab185535d266}</ProjectGuid>
     <RootNamespace>Scroller</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>MusicTraining</ProjectName>
+    <ProjectName>Minigame</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
