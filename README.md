@@ -4,17 +4,6 @@
 
 This is a minigame made from a template that the creator of Raylib shared us. Enjoy the modifications that FinalPandemic created ; - )
 
-## Key Features
-
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
- 
-## Controls
-
- - {ControlsScheme}
-
 ## Developers
 
  - Code: Alexandre Carreras [ TheGewehr ]:
