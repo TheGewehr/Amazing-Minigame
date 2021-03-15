@@ -12,16 +12,16 @@ Avoid the asteroids as long as you can. You can also play on a local multiplayer
 
 ### Movement:
 
-Player 1:
+- Player 1:
 Arrows right and left arrows
 
-Player 2:
+- Player 2:
 A and D keys.
 
-Player 3:
+- Player 3:
 F and H keys.
 
-Player 4:
+- Player 4:
 J and L arrows.
 
 ## Developers
