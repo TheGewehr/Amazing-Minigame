@@ -2,7 +2,27 @@
 
 ## Description
 
-This is a minigame made from a template that the creator of Raylib shared us. Enjoy the modifications that FinalPandemic created ; - )
+Avoid the asteroids as long as you can. You can also play on a local multiplayer until four players. On multiplayer the ones who abandon the screen lose, until there is one left.
+
+## Key Features
+
+(Planned) Local multiplayer.
+
+## Controls
+
+### Movement:
+
+Player 1:
+Arrows right and left arrows
+
+Player 2:
+A and D keys.
+
+Player 3:
+F and H keys.
+
+Player 4:
+J and L arrows.
 
 ## Developers
 
