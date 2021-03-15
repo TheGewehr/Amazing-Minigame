@@ -6,11 +6,15 @@ Avoid the asteroids as long as you can. You can also play on a local multiplayer
 
 ## Key Features
 
-(Planned) Local multiplayer.
+- (Planned) Local multiplayer.
+
+- Last the longest as you trespass a dangerous asteroid zone in outer space.
+
+- Get Power ups to help you get the highest score!.
+
+- Vertical scrolling game.
 
 ## Controls
-
-### Movement:
 
 - Player 1:
 Arrows right and left arrows
