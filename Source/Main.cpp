@@ -10,7 +10,7 @@
 #include <math.h>			// Required for: sinf(), cosf()
 #include <SDL_ttf.h>		// Required for text
 
-
+// I like to dance.
 
 // Include SDL libraries
 #include "SDL/include/SDL.h"				// Required for SDL base systems functionality
